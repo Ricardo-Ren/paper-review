@@ -12,9 +12,11 @@ This paper describes a new return-into-libc technique that allows arbitrary comp
 
 The procedure of return-oriented programming
 
-Find sequences such as "pop xxx;ret"  in the code segment to control the stack pointer $esp. 
-Construct some code sequences called gadget to call and perform the computation planned.
+1. Find sequences such as "pop xxx;ret"  in the code segment to control the stack pointer $esp. 
+2. Construct some code sequences called gadget to call and perform the computation planned.
+
 In the thoughts part, I will give a specific example.
+
 Using sequences recovered from a particular version of gnu libc, this paper describes gadgets that allow arbitrary computation, introducing many techniques that lay the foundation for return-oriented programming.
 
 ## Strengths
