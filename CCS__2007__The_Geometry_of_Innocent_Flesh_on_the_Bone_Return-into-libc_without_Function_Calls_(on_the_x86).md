@@ -7,8 +7,8 @@ Yinghao Ren (2020/12/7)
 
 # Paper content
 ## Summary
-Due to the limitation of  W^X which means no memory location in a process image is marked both writable (“W”) and executable (“X”) and  NX/XD is the implementation on Windows, attackers cannot inject code by using the memory overflow to change the value of return address of a function on the stack. So they will use code that already exists in the process image they are attacking. Since the standard C library, libc, is loaded in nearly every Unix program, it is libc that is the usual target which is known as return into-libc attacks. 
-This paper describes a new return-into-libc technique that allows arbitrary computation that does not require calling any functions and in this way removing functions from libc is no help. There is an assumption that because of the properties of the x86 instruction set, in any sufficiently large body of x86 executable code there will feature sequences that allow the construction of similar gadgets. So an attacker who controls the stack will be able to use the return-into-libc techniques to cause the exploited program to undertake arbitrary computation.
+The W^X security feature (known as NX/XD in Windows) is a memory protection policy implemented in the operating system which only allows a page to be either writeable or executable, but not both. Due to this feature attackers cannot inject _and_ execute malicious payload into the system (e.g., by using memory overflow to change the value of return address of a function on the stack). So they will use code that already exists in the process image they are attacking. Since the standard C library, libc is loaded in nearly every Unix program, it is libc that is the usual target which is known as return-into-libc attacks. 
+This paper describes a new return-into-libc technique that allows arbitrary computation that does not require calling any functions and in this way removing functions from libc is no help because by ending with the instruction "ret", many instructions can be chained together to perform computations and the libc functions are not needed by attackers. There is an assumption that because of the properties of the x86 instruction set, in any sufficiently large body of x86 executable code there will feature sequences that allow the construction of similar gadgets. So an attacker who controls the stack will be able to use the return-into-libc techniques to cause the exploited program to undertake arbitrary computation by using the gadgets composing of many small instructions. This is called return-oriented-programming.
 
 The procedure of return-oriented programming
 
@@ -17,7 +17,7 @@ The procedure of return-oriented programming
 
 In the thoughts part, I will give a specific example.
 
-Using sequences recovered from a particular version of gnu libc, this paper describes gadgets that allow arbitrary computation, introducing many techniques that lay the foundation for return-oriented programming.
+Using sequences recovered from a particular version of gnu libc, this paper describes gadgets that allow arbitrary computation, introducing many techniques that lay the foundation for return-oriented-programming.
 
 ## Strengths
 Return-into-libc was considered a more limited attack than code injection because it can only execute straight-line code and attackers can invoke only functions available to him in the program’s text segment and loaded libraries. 
